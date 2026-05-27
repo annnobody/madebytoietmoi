@@ -87,6 +87,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Toi et Moi — Made for your little world" },
+      { name: "description", content: "Toi et Moi Green is a website showcasing functional 3D-printed art for everyday use." },
+      { property: "og:description", content: "Toi et Moi Green is a website showcasing functional 3D-printed art for everyday use." },
+      { name: "twitter:description", content: "Toi et Moi Green is a website showcasing functional 3D-printed art for everyday use." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3673aa84-6545-4f5b-a283-1e79da1b890e/id-preview-f7efa88e--3efa8e04-3831-48a6-bf1f-ca83605430ce.lovable.app-1779896265221.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3673aa84-6545-4f5b-a283-1e79da1b890e/id-preview-f7efa88e--3efa8e04-3831-48a6-bf1f-ca83605430ce.lovable.app-1779896265221.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
