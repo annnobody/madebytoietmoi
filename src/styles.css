@@ -1,0 +1,106 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-green: var(--green);
+  --color-green-deep: var(--green-deep);
+  --color-green-soft: var(--green-soft);
+  --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "Karla", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Toi et Moi palette */
+  --cream: oklch(0.965 0.018 85);          /* #F7F1E6 warm cream */
+  --ink: oklch(0.38 0.055 45);             /* deep brown ink */
+  --ink-soft: oklch(0.52 0.045 50);        /* softer brown for body */
+  --green: oklch(0.62 0.07 145);           /* sage / butterfly green */
+  --green-deep: oklch(0.42 0.065 145);     /* deep forest hover */
+  --green-soft: oklch(0.88 0.035 145);     /* tint */
+
+  --background: var(--cream);
+  --foreground: var(--ink);
+
+  --card: oklch(0.985 0.012 85);
+  --card-foreground: var(--ink);
+  --popover: oklch(0.985 0.012 85);
+  --popover-foreground: var(--ink);
+
+  --primary: var(--green);
+  --primary-foreground: oklch(0.985 0.012 85);
+  --secondary: var(--green-soft);
+  --secondary-foreground: var(--green-deep);
+  --muted: oklch(0.93 0.018 85);
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--green-soft);
+  --accent-foreground: var(--green-deep);
+
+  --destructive: oklch(0.55 0.18 25);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --border: oklch(0.88 0.02 80);
+  --input: oklch(0.88 0.02 80);
+  --ring: var(--green);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Quiet, slow fade-in on enter */
+  @keyframes toi-fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    animation: toi-fade-up 0.9s ease-out both;
+  }
+}
