@@ -7,7 +7,7 @@ import { pieces as allPieces, type Piece } from "@/data/pieces";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 type LayoutCtx = {
-  openInquiry: (pieceLabel?: string) => void;
+  openInquiry: (pieceLabel?: string, colorNote?: string) => void;
   openLightbox: (list: Piece[], index: number) => void;
 };
 
@@ -16,12 +16,14 @@ export function SiteLayout({ children }: { children: (ctx: LayoutCtx) => ReactNo
   const { tx } = useLanguage();
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [inquiryPiece, setInquiryPiece] = useState<string | undefined>(undefined);
+  const [inquiryColorNote, setInquiryColorNote] = useState<string | undefined>(undefined);
 
   const [lightboxList, setLightboxList] = useState<Piece[]>(allPieces);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const openInquiry = useCallback((pieceLabel?: string) => {
+  const openInquiry = useCallback((pieceLabel?: string, colorNote?: string) => {
     setInquiryPiece(pieceLabel);
+    setInquiryColorNote(colorNote);
     setInquiryOpen(true);
   }, []);
 
@@ -41,15 +43,16 @@ export function SiteLayout({ children }: { children: (ctx: LayoutCtx) => ReactNo
         index={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
         onIndexChange={(i) => setLightboxIndex(i)}
-        onInquire={(p) => {
+        onInquire={(p, colorNote) => {
           setLightboxIndex(null);
-          openInquiry(tx(p.title));
+          openInquiry(tx(p.title), colorNote);
         }}
       />
       <InquiryDialog
         open={inquiryOpen}
         onClose={() => setInquiryOpen(false)}
         pieceLabel={inquiryPiece}
+        colorNote={inquiryColorNote}
       />
     </div>
   );

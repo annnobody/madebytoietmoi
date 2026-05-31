@@ -1,20 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Piece } from "@/data/pieces";
+import { ColorPicker } from "@/components/ColorPicker";
+import type { SelectedColor } from "@/data/colors";
 
 type Props = {
   pieces: Piece[];
   index: number | null;
   onClose: () => void;
   onIndexChange: (i: number) => void;
-  onInquire: (piece: Piece) => void;
+  onInquire: (piece: Piece, colorNote?: string) => void;
 };
 
 export function Lightbox({ pieces, index, onClose, onIndexChange, onInquire }: Props) {
   const { t, tx } = useLanguage();
   const open = index !== null && index >= 0 && index < pieces.length;
   const piece = open ? pieces[index!] : null;
+
+  const [selectedColor, setSelectedColor] = useState<SelectedColor | null>(null);
+
+  useEffect(() => {
+    setSelectedColor(null);
+  }, [index]);
+
+  const isPreorder = selectedColor?.type === "custom";
+
+  const colorNote = selectedColor
+    ? selectedColor.type === "available"
+      ? `Color: ${selectedColor.color.name} · ${selectedColor.color.pantone}`
+      : `Color: ${selectedColor.name} · ${selectedColor.pantone}`
+    : undefined;
 
   useEffect(() => {
     if (!open) return;
@@ -72,7 +88,7 @@ export function Lightbox({ pieces, index, onClose, onIndexChange, onInquire }: P
         className="relative max-w-5xl w-full grid md:grid-cols-[1.6fr_1fr] gap-0 bg-cream rounded-sm overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-muted">
+        <div className="bg-muted relative overflow-hidden">
           <img
             src={piece.image}
             alt={tx(piece.title)}
@@ -80,6 +96,21 @@ export function Lightbox({ pieces, index, onClose, onIndexChange, onInquire }: P
             width={1024}
             height={1024}
           />
+          {isPreorder && selectedColor?.type === "custom" && (
+            <>
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: selectedColor.hex,
+                  opacity: 0.35,
+                  mixBlendMode: "color",
+                }}
+              />
+              <p className="absolute bottom-0 left-0 right-0 bg-ink/50 text-cream/80 text-[9px] tracking-[0.15em] uppercase text-center py-1">
+                {t("gallery.colorApprox")}
+              </p>
+            </>
+          )}
         </div>
         <div className="p-8 md:p-10 flex flex-col">
           <p className="text-[10px] tracking-[0.3em] uppercase text-green-deep">
@@ -103,16 +134,48 @@ export function Lightbox({ pieces, index, onClose, onIndexChange, onInquire }: P
               </dt>
               <dd className="mt-1 text-ink">{tx(piece.material)}</dd>
             </div>
+            {piece.price && (
+              <div>
+                <dt className="text-[10px] tracking-[0.25em] uppercase text-ink-soft">
+                  {t("gallery.price")}
+                </dt>
+                <dd className="mt-1 text-ink font-medium">{piece.price}</dd>
+              </div>
+            )}
           </dl>
 
+          {(piece.customColor || piece.allowNameTag) && (
+            <div className="mt-2">
+              {piece.customColor && (
+                <ColorPicker value={selectedColor} onChange={setSelectedColor} />
+              )}
+              {piece.allowNameTag && (
+                <span className="mt-3 inline-block text-[10px] tracking-[0.2em] uppercase px-3 py-1 border border-green text-green-deep">
+                  {t("gallery.nameTag")}
+                </span>
+              )}
+            </div>
+          )}
+
           <div className="mt-auto pt-8">
-            <button
-              type="button"
-              onClick={() => onInquire(piece)}
-              className="w-full md:w-auto inline-flex items-center justify-center px-6 py-3 bg-green text-primary-foreground text-xs tracking-[0.25em] uppercase hover:bg-green-deep transition-colors"
-            >
-              {t("gallery.inquire")}
-            </button>
+            <div>
+              {isPreorder && (
+                <p className="text-[9px] text-ink-soft tracking-[0.1em] mb-2">
+                  {t("gallery.colorPreorderNote")}
+                </p>
+              )}
+              <button
+                type="button"
+                onClick={() => onInquire(piece, colorNote)}
+                className={`w-full md:w-auto inline-flex items-center justify-center px-6 py-3 text-primary-foreground text-xs tracking-[0.25em] uppercase transition-colors ${
+                  isPreorder
+                    ? "bg-ink hover:bg-ink/80"
+                    : "bg-green hover:bg-green-deep"
+                }`}
+              >
+                {isPreorder ? t("gallery.colorPreorder") : t("gallery.inquire")}
+              </button>
+            </div>
           </div>
         </div>
       </div>
