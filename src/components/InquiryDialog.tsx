@@ -135,7 +135,7 @@ export function InquiryDialog({ open, onClose, pieceLabel, colorNote }: Props) {
             </Field>
             <Field label={t("inquiry.zalo")}>
               <input
-                type="tel"
+                type="text"
                 maxLength={50}
                 value={form.zalo}
                 onChange={(e) => setForm({ ...form, zalo: e.target.value })}
