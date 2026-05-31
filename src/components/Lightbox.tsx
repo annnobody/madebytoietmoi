@@ -26,10 +26,11 @@ export function Lightbox({ pieces, index, onClose, onIndexChange, onInquire }: P
 
   const isPreorder = selectedColor?.type === "custom";
 
+  const colorLabel = t("gallery.colorLabel");
   const colorNote = selectedColor
     ? selectedColor.type === "available"
-      ? `Color: ${selectedColor.color.name} · ${selectedColor.color.pantone}`
-      : `Color: ${selectedColor.name} · ${selectedColor.pantone}`
+      ? `${colorLabel}: ${selectedColor.color.name} · ${selectedColor.color.pantone}`
+      : `${colorLabel}: ${selectedColor.name} · ${selectedColor.pantone}`
     : undefined;
 
   useEffect(() => {
