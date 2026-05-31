@@ -5,10 +5,12 @@ import planter from "@/assets/piece-planter.jpg";
 import tray from "@/assets/piece-tray.jpg";
 import napkinring from "@/assets/piece-napkinring.jpg";
 import hook from "@/assets/piece-hook.jpg";
+import sandShovel from "@/assets/piece-sand-shovel.png";
+import pegboard from "@/assets/piece-pegboard.png";
 
 export type Bilingual = { vi: string; en: string };
 
-export type CollectionKey = "desk" | "plants" | "home" | "table";
+export type CollectionKey = "desk" | "plants" | "home" | "pet";
 
 export type Piece = {
   id: string;
@@ -18,6 +20,9 @@ export type Piece = {
   caption: Bilingual;
   dimensions: string;
   material: Bilingual;
+  price?: string;
+  customColor?: boolean;
+  allowNameTag?: boolean;
 };
 
 export const featuredImage = featured;
@@ -27,15 +32,15 @@ export const featuredPiece: Piece = {
   collection: "home",
   image: featured,
   title: {
-    vi: "Bộ trang trí “Buổi sáng dịu dàng”",
-    en: "“Gentle Morning” shelf set",
+    vi: "Bộ sản phẩm “Thanh Bình”",
+    en: "“Tranquility” set",
   },
   caption: {
     vi: "Một bộ ba nhỏ — lọ hoa, đế nến, và khay tròn — làm cho góc kệ trở nên ấm áp.",
     en: "A trio — bud vase, candle dish, and little cup — to warm up a quiet shelf.",
   },
-  dimensions: "Set of 3 · H 6–11cm",
-  material: { vi: "PLA mờ, hoàn thiện thủ công", en: "Matte PLA, hand-finished" },
+  dimensions: "Set of 3",
+  material: { vi: "Nhựa PLA", en: "Matte PLA" },
 };
 
 export const pieces: Piece[] = [
@@ -89,7 +94,7 @@ export const pieces: Piece[] = [
   },
   {
     id: "napkin-ring",
-    collection: "table",
+    collection: "home",
     image: napkinring,
     title: { vi: "Vòng khăn ăn Ondine", en: "Ondine napkin ring" },
     caption: {
@@ -111,8 +116,37 @@ export const pieces: Piece[] = [
     dimensions: "Ø 5cm",
     material: { vi: "PLA mờ màu sage", en: "Matte sage PLA" },
   },
+  {
+    id: "pegboard",
+    collection: "desk",
+    image: pegboard,
+    title: { vi: "Bảng treo tường Modular", en: "Modular pegboard" },
+    caption: {
+      vi: "Ghép từng mảnh, tạo nên góc bàn của riêng bạn.",
+      en: "Piece by piece, a desk corner that's entirely your own.",
+    },
+    dimensions: "30 × 30cm",
+    material: { vi: "PLA mờ màu kem", en: "Matte cream PLA" },
+    price: "200.000 ₫ / miếng",
+    customColor: true,
+  },
+  {
+    id: "sand-shovel",
+    collection: "pet",
+    image: sandShovel,
+    title: { vi: "Xẻng cát thú cưng", en: "Pet sand shovel" },
+    caption: {
+      vi: "Cho những buổi chiều chơi cát yên bình bên bé.",
+      en: "For quiet afternoons of digging alongside your pet.",
+    },
+    dimensions: "H 30cm · 200g",
+    material: { vi: "Nhựa PLA", en: "PLA" },
+    price: "400.000 ₫",
+    customColor: true,
+    allowNameTag: true,
+  },
 ];
 
 export const collections: { key: CollectionKey; pieces: Piece[] }[] = (
-  ["desk", "plants", "table", "home"] as CollectionKey[]
+  ["desk", "pet", "plants", "home"] as CollectionKey[]
 ).map((key) => ({ key, pieces: pieces.filter((p) => p.collection === key) }));

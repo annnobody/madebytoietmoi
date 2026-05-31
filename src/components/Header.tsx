@@ -11,7 +11,6 @@ export function Header({ onInquire }: { onInquire: () => void }) {
     <header className="sticky top-0 z-30 bg-cream/85 backdrop-blur-sm border-b border-border/60">
       <div className="mx-auto max-w-6xl px-6 md:px-10 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2" aria-label="Toi et Moi — Home">
-          <img src={logo} alt="Toi et Moi" className="h-10 w-10 object-contain" />
           <span className="font-serif text-lg text-ink hidden sm:inline">Toi et Moi</span>
         </Link>
 

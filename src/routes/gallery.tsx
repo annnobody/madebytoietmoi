@@ -36,7 +36,7 @@ function GalleryInner({
     <>
       <section className="pt-20 md:pt-28 pb-8 md:pb-12">
         <div className="mx-auto max-w-3xl px-6 text-center fade-up">
-          <p className="text-[10px] tracking-[0.3em] uppercase text-green-deep">Toi et Moi</p>
+          {/* <p className="text-[10px] tracking-[0.3em] uppercase text-green-deep">Toi et Moi</p> */}
           <h1 className="mt-3 font-serif text-4xl md:text-6xl text-ink leading-tight">
             {t("gallery.title")}
           </h1>

@@ -3,9 +3,13 @@ import { X } from "lucide-react";
 import { z } from "zod";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+const APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycby-pj29sMuYa0aLxWcwi1tGyzpGDLuiaw_dP1KWUgQ377bFQt--MS27E73VQeBBC52aBw/exec";
+
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
   email: z.string().trim().email().max(255),
+  zalo: z.string().trim().max(50).optional().default(""),
   message: z.string().trim().min(1).max(1000),
   piece: z.string().trim().max(200).optional().default(""),
 });
@@ -14,19 +18,22 @@ type Props = {
   open: boolean;
   onClose: () => void;
   pieceLabel?: string;
+  colorNote?: string;
 };
 
-export function InquiryDialog({ open, onClose, pieceLabel }: Props) {
+export function InquiryDialog({ open, onClose, pieceLabel, colorNote }: Props) {
   const { t } = useLanguage();
-  const [form, setForm] = useState({ name: "", email: "", message: "", piece: "" });
+  const [form, setForm] = useState({ name: "", email: "", zalo: "", message: "", piece: "" });
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     if (open) {
       setForm((f) => ({ ...f, piece: pieceLabel ?? "" }));
       setError(null);
       setSent(false);
+      setSending(false);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -36,22 +43,37 @@ export function InquiryDialog({ open, onClose, pieceLabel }: Props) {
 
   if (!open) return null;
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       setError(parsed.error.issues[0]?.message ?? "Invalid input");
       return;
     }
-    const { name, email, message, piece } = parsed.data;
-    const subject = encodeURIComponent(
-      piece ? `Toi et Moi — Inquiry: ${piece}` : "Toi et Moi — Inquiry",
-    );
-    const body = encodeURIComponent(
-      `${message}\n\n— ${name} (${email})${piece ? `\nPiece: ${piece}` : ""}`,
-    );
-    window.location.href = `mailto:hello@madebytoietmoi.com?subject=${subject}&body=${body}`;
-    setSent(true);
+    setSending(true);
+    setError(null);
+    const { name, email, zalo, message, piece } = parsed.data;
+    const params = new URLSearchParams({
+      name,
+      email,
+      zalo,
+      piece,
+      color: colorNote ?? "",
+      message,
+      timestamp: new Date().toISOString(),
+    });
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: params,
+      });
+      setSent(true);
+    } catch {
+      setError(t("inquiry.errorRetry"));
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -111,11 +133,29 @@ export function InquiryDialog({ open, onClose, pieceLabel }: Props) {
                 className="w-full bg-transparent border-b border-border focus:border-green outline-none py-2 text-ink"
               />
             </Field>
+            <Field label={t("inquiry.zalo")}>
+              <input
+                type="text"
+                maxLength={50}
+                value={form.zalo}
+                onChange={(e) => setForm({ ...form, zalo: e.target.value })}
+                className="w-full bg-transparent border-b border-border focus:border-green outline-none py-2 text-ink"
+              />
+            </Field>
             {form.piece && (
               <Field label={t("inquiry.piece")}>
                 <input
                   readOnly
                   value={form.piece}
+                  className="w-full bg-transparent border-b border-border outline-none py-2 text-ink"
+                />
+              </Field>
+            )}
+            {colorNote && (
+              <Field label={t("gallery.colorLabel")}>
+                <input
+                  readOnly
+                  value={colorNote}
                   className="w-full bg-transparent border-b border-border outline-none py-2 text-ink"
                 />
               </Field>
@@ -135,9 +175,10 @@ export function InquiryDialog({ open, onClose, pieceLabel }: Props) {
 
             <button
               type="submit"
-              className="mt-2 w-full inline-flex items-center justify-center px-6 py-3 bg-green text-primary-foreground text-xs tracking-[0.25em] uppercase hover:bg-green-deep transition-colors"
+              disabled={sending}
+              className="mt-2 w-full inline-flex items-center justify-center px-6 py-3 bg-green text-primary-foreground text-xs tracking-[0.25em] uppercase hover:bg-green-deep transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {t("inquiry.send")}
+              {sending ? t("inquiry.sending") : t("inquiry.send")}
             </button>
           </form>
         )}
