@@ -4,9 +4,7 @@ export type PantoneColor = {
   hex: string;
 };
 
-export type SelectedColor =
-  | { type: "available"; color: PantoneColor }
-  | { type: "custom"; name: string; pantone: string; hex: string };
+export type SelectedColor = PantoneColor;
 
 export const availableColors: PantoneColor[] = [
   { name: "Sage Green",  pantone: "PMS 7494 C", hex: "#8FAF8A" },

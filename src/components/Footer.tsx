@@ -8,11 +8,7 @@ export function Footer() {
     <footer className="mt-32 border-t border-border/60 bg-cream">
       <div className="mx-auto max-w-6xl px-6 md:px-10 py-14 grid gap-10 md:grid-cols-3 items-start">
         <div className="flex items-start gap-3">
-          <img src={logo} alt="" className="h-12 w-12 object-contain" />
-          <div>
-            <p className="font-serif text-xl text-ink">Toi et Moi</p>
-            <p className="text-sm text-ink-soft mt-1">{t("hero.tagline")}</p>
-          </div>
+          <img src={logo} alt="" className="h-20 w-25 object-contain" />
         </div>
 
         <div className="text-sm text-ink-soft">

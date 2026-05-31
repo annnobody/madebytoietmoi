@@ -46,9 +46,9 @@ function HomeInner({
       {/* Hero */}
       <section className="relative pt-20 md:pt-28 pb-24 md:pb-32">
         <div className="mx-auto max-w-3xl px-6 text-center fade-up">
-          <img src={logo} alt="Toi et Moi" className="mx-auto h-32 md:h-44 w-auto" />
+          <img src={logo} alt="Toi et Moi" className="mx-auto h-60 md:h-65 w-auto" />
           <h1 className="sr-only">Toi et Moi — {t("hero.tagline")}</h1>
-          <p className="mt-6 font-serif text-3xl md:text-5xl text-ink leading-[1.15] tracking-tight">
+          <p className="mt-6 text-ink-soft text-2xl md:text-2xl text-ink leading-[1.15] tracking-tight">
             {t("hero.tagline")}
           </p>
           <p className="mt-6 text-ink-soft md:text-lg leading-relaxed max-w-xl mx-auto">
