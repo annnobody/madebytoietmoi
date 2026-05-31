@@ -96,7 +96,7 @@ export function Lightbox({ pieces, index, onClose, onIndexChange, onInquire }: P
             width={1024}
             height={1024}
           />
-          {isPreorder && selectedColor?.type === "custom" && (
+          {isPreorder && (
             <>
               <div
                 className="absolute inset-0 pointer-events-none"
@@ -147,7 +147,7 @@ export function Lightbox({ pieces, index, onClose, onIndexChange, onInquire }: P
           {(piece.customColor || piece.allowNameTag) && (
             <div className="mt-2">
               {piece.customColor && (
-                <ColorPicker value={selectedColor} onChange={setSelectedColor} />
+                <ColorPicker key={index ?? -1} value={selectedColor} onChange={setSelectedColor} />
               )}
               {piece.allowNameTag && (
                 <span className="mt-3 inline-block text-[10px] tracking-[0.2em] uppercase px-3 py-1 border border-green text-green-deep">
