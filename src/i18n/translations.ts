@@ -26,9 +26,9 @@ export const translations = {
     pet: { vi: "Gánh nặng", en: "For your pets" },
   },
   gallery: {
-    title: { vi: "Sản phẩm đang có", en: "Gallery" },
+    title: { vi: "Tất cả sản phẩm", en: "Gallery" },
     subtitle: {
-      vi: "Mỗi món đồ được thiết kế, hoàn thiện bằng tay để vừa giúp ích cho cuộc sống vừa mang những dấu ấn như tên, logo của bạn.",
+      vi: "",
       en: "Each piece is designed, printed, and finished by hand.",
     },
     inquire: { vi: "Hỏi thêm về sản phẩm này", en: "Inquire about this product" },
@@ -41,17 +41,15 @@ export const translations = {
     customColor: { vi: "In màu theo yêu cầu", en: "Custom color available" },
     nameTag: { vi: "Có thể thêm tên", en: "Name tag available" },
     colorLabel: { vi: "Màu sắc", en: "Color" },
-    colorOther: { vi: "+ Màu Pantone khác", en: "+ Other Pantone color" },
-    colorApprox: { vi: "Màu xấp xỉ", en: "Approximate preview" },
-    colorPreorder: { vi: "Đặt trước màu này", en: "Pre-order this color" },
-    colorPreorderNote: { vi: "+ thời gian đặt trước", en: "+ pre-order lead time applies" },
-    colorSearch: { vi: "Tên màu Pantone…", en: "Pantone color name…" },
-    colorSelected: { vi: "Đã chọn", en: "Selected" },
+    colorOtherNotice: {
+      vi: "Nếu bạn cần custom màu riêng, hãy gửi yêu cầu tư vấn cho chúng mình nhé.",
+      en: "Want a different color? Send us an inquiry and we'll help you find the right match.",
+    },
   },
   about: {
     title: { vi: "Câu chuyện của chúng tôi", en: "Our story" },
     lead: {
-      vi: "Toi et Moi — hai đứa mình. Một xưởng in nhỏ làm ra những món đồ nhỏ, dành cho thế giới nhỏ của bạn.",
+      vi: "Toi et Moi — hai đứa mình. Một xưởng in nhỏ làm ra những món đồ nhỏ xinh.",
       en: "Toi et Moi — you and me. A small studio making small things for your little world.",
     },
     body: {
@@ -99,6 +97,10 @@ export const translations = {
     successBody: {
       vi: "Xong rồi, đợi chúng mình một xíu nhéee",
       en: "All set! We'll be in touch soon.",
+    },
+    errorRetry: {
+      vi: "Có lỗi xảy ra, bạn thử lại nhé.",
+      en: "Something went wrong. Please try again.",
     },
   },
   footer: {
