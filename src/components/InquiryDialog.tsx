@@ -14,9 +14,10 @@ type Props = {
   open: boolean;
   onClose: () => void;
   pieceLabel?: string;
+  colorNote?: string;
 };
 
-export function InquiryDialog({ open, onClose, pieceLabel }: Props) {
+export function InquiryDialog({ open, onClose, pieceLabel, colorNote }: Props) {
   const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", message: "", piece: "" });
   const [error, setError] = useState<string | null>(null);
@@ -47,8 +48,9 @@ export function InquiryDialog({ open, onClose, pieceLabel }: Props) {
     const subject = encodeURIComponent(
       piece ? `Toi et Moi — Inquiry: ${piece}` : "Toi et Moi — Inquiry",
     );
+    const colorLine = colorNote ? `${colorNote}\n\n` : "";
     const body = encodeURIComponent(
-      `${message}\n\n— ${name} (${email})${piece ? `\nPiece: ${piece}` : ""}`,
+      `${colorLine}${message}\n\n— ${name} (${email})${piece ? `\nPiece: ${piece}` : ""}`,
     );
     window.location.href = `mailto:hello@madebytoietmoi.com?subject=${subject}&body=${body}`;
     setSent(true);
