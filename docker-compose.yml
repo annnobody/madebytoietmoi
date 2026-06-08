@@ -1,0 +1,38 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: madebytoietmoi:latest
+    container_name: madebytoietmoi
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      # Add your runtime env vars here, e.g.:
+      # VITE_API_URL: https://api.example.com
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ── Optional: Nginx reverse proxy ─────────────────────────────────────────
+  # Uncomment if you want TLS termination / gzip / caching in front of the app.
+  #
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: madebytoietmoi-nginx
+  #   restart: unless-stopped
+  #   depends_on:
+  #     web:
+  #       condition: service_healthy
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+  #     - /etc/letsencrypt:/etc/letsencrypt:ro
