@@ -12,4 +12,9 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Force-enable the nitro deploy plugin outside the Lovable sandbox so `bun run build`
+  // emits a standalone server. The `node-server` preset produces a plain Node.js server at
+  // dist/server/index.mjs (used by the Docker image). Override per-build with NITRO_PRESET
+  // (e.g. cloudflare-module) — the env var wins over this default.
+  nitro: { preset: process.env.NITRO_PRESET ?? "node-server" },
 });
